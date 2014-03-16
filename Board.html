@@ -1,0 +1,46 @@
+<script>
+var CA = CA || {};
+
+CA.Board = function( width, height ) {
+    this.width = width;
+    this.height = height;
+    this.board = [];
+
+    for (var x = 0; x < width; x++) {
+        this.board.push( [] );
+    }
+    for (var x = 0; x < width; x++) {
+        for (var y = 0; y < height; y++) {
+            this.board[ x ].push( new CA.Cell() );
+        }
+    }
+}
+
+CA.Board.prototype.setCellState = function( x, y, state ) {
+    this.board[x][y].nextState = state;
+    this.board[x][y].update();
+}
+CA.Board.prototype.setCellRegion = function( x, y, region ) {this.board[x][y].region = region;}
+
+CA.Board.prototype.getCellState = function( x, y ) {return this.board[x][y].state;}
+
+CA.Board.prototype.getCell = function( x, y ) {return this.board[x][y];}
+
+CA.Board.prototype.step = function() {
+    for (var x = 0; x < this.width; x++) {
+        for (var y = 0; y < this.height; y++) {
+            this.board[x][y].step();
+        }
+    }
+}
+
+CA.Board.prototype.update = function() {
+    for (var x = 0; x < this.width; x++) {
+        for (var y = 0; y < this.height; y++) {
+            this.board[x][y].update();
+        }
+    }
+}
+
+console.log('Board.html processed');
+</script>
