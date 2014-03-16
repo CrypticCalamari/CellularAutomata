@@ -1,0 +1,280 @@
+<script>
+var CA = CA || {};
+
+CA.ToolBar = (function() {
+    return {
+        handTool: function( event ) {
+            console.log('Hand Tool');
+            var canvas = document.getElementById('handToolCanvas');
+            var ctx = canvas.getContext('2d');
+            var shapeFill = '#000';
+            var innerFill = '#fff';
+            var outerFill = '#000';
+
+            if (event != 'draw') {
+                switch (event.type) {
+                    case 'mouseover':
+                        innerFill = 'gray';
+                        break;
+                    case 'mouseout':
+                        innerFill = '#fff';
+                        break;
+                    case 'mousedown':
+                        innerFill = 'red';
+                        break;
+                    case 'mouseup':
+                        innerFill = '#fff';
+                        break;
+                    case 'click':
+                        break;
+                }
+            }
+
+            ctx.clearRect(0,0,100,100);
+            ctx.fillStyle = outerFill;
+            CA.Util.rect( ctx, 0, 0, 100, 100, 10 );
+            
+            ctx.fillStyle = innerFill;
+            CA.Util.rect( ctx, 10, 10, 80, 80, 10 );
+
+            // Draw State Brush Here
+        },
+        inspectionTool: function( event ) {
+            console.log('Inspection Tool');
+            var canvas = document.getElementById('inspectionToolCanvas');
+            var ctx = canvas.getContext('2d');
+            var shapeFill = '#000';
+            var innerFill = '#fff';
+            var outerFill = '#000';
+
+            if (event != 'draw') {
+                switch (event.type) {
+                    case 'mouseover':
+                        innerFill = 'gray';
+                        break;
+                    case 'mouseout':
+                        innerFill = '#fff';
+                        break;
+                    case 'mousedown':
+                        innerFill = 'red';
+                        break;
+                    case 'mouseup':
+                        innerFill = '#fff';
+                        break;
+                    case 'click':
+                        CA.BoardClickHandler.setStrategy( CA.BoardView.inspectCell );
+                        break;
+                }
+            }
+
+            ctx.clearRect(0,0,100,100);
+            ctx.fillStyle = outerFill;
+            CA.Util.rect( ctx, 0, 0, 100, 100, 10 );
+            
+            ctx.fillStyle = innerFill;
+            CA.Util.rect( ctx, 10, 10, 80, 80, 10 );
+
+            // Draw State Brush Here
+        },
+        stateBrushTool: function( event ) {
+            console.log('State Brush Tool');
+            var canvas = document.getElementById('stateBrushToolCanvas');
+            var ctx = canvas.getContext('2d');
+            var shapeFill = '#000';
+            var innerFill = '#fff';
+            var outerFill = '#000';
+
+            if (event != 'draw') {
+                switch (event.type) {
+                    case 'mouseover':
+                        innerFill = 'gray';
+                        break;
+                    case 'mouseout':
+                        innerFill = '#fff';
+                        break;
+                    case 'mousedown':
+                        innerFill = 'red';
+                        break;
+                    case 'mouseup':
+                        innerFill = '#fff';
+                        break;
+                    case 'click':
+                        CA.stateBrush = Number(event.target['data-value']);
+                        CA.BoardClickHandler.setStrategy( CA.BoardView.paintCellState );
+                        break;
+                }
+            }
+
+            ctx.clearRect(0,0,100,100);
+            ctx.fillStyle = outerFill;
+            CA.Util.rect( ctx, 0, 0, 100, 100, 10 );
+            
+            ctx.fillStyle = innerFill;
+            CA.Util.rect( ctx, 10, 10, 80, 80, 10 );
+
+            // Draw State Brush Here
+        },
+        regionBrushTool: function( event ) {
+            console.log('Region Brush Tool');
+            var canvas = document.getElementById('regionBrushToolCanvas');
+            var ctx = canvas.getContext('2d');
+            var shapeFill = '#000';
+            var innerFill = '#fff';
+            var outerFill = '#000';
+
+            if (event != 'draw') {
+                switch (event.type) {
+                    case 'mouseover':
+                        innerFill = 'gray';
+                        break;
+                    case 'mouseout':
+                        innerFill = '#fff';
+                        break;
+                    case 'mousedown':
+                        innerFill = 'red';
+                        break;
+                    case 'mouseup':
+                        innerFill = '#fff';
+                        break;
+                    case 'click':
+                        CA.BoardClickHandler.setStrategy( CA.BoardView.paintCellRegion );
+                        break;
+                }
+            }
+
+            ctx.clearRect(0,0,100,100);
+            ctx.fillStyle = outerFill;
+            CA.Util.rect( ctx, 0, 0, 100, 100, 10 );
+            
+            ctx.fillStyle = innerFill;
+            CA.Util.rect( ctx, 10, 10, 80, 80, 10 );
+
+            // Draw Region Brush Here
+        },
+        zoomInTool: function( event ) {
+            console.log('Zoom In Tool');
+            var canvas = document.getElementById('zoomInToolCanvas');
+            var ctx = canvas.getContext('2d');
+            var shapeFill = '#000';
+            var innerFill = '#fff';
+            var outerFill = '#000';
+
+            if (event != 'draw') {
+                switch (event.type) {
+                    case 'mouseover':
+                        innerFill = 'gray';
+                        break;
+                    case 'mouseout':
+                        innerFill = '#fff';
+                        break;
+                    case 'mousedown':
+                        innerFill = 'red';
+                        break;
+                    case 'mouseup':
+                        innerFill = '#fff';
+                        break;
+                    case 'click':
+                        CA.BoardClickHandler.setStrategy( CA.BoardView.zoomIn );
+                        break;
+                }
+            }
+
+            ctx.clearRect(0,0,100,100);
+            ctx.fillStyle = outerFill;
+            CA.Util.rect( ctx, 0, 0, 100, 100, 10 );
+            
+            ctx.fillStyle = innerFill;
+            CA.Util.rect( ctx, 10, 10, 80, 80, 10 );
+
+            // Draw Zoom Magnifier Here
+        },
+        zoomOutTool: function( event ) {
+            console.log('Zoom Out Tool');
+            var canvas = document.getElementById('zoomOutToolCanvas');
+            var ctx = canvas.getContext('2d');
+            var shapeFill = '#000';
+            var innerFill = '#fff';
+            var outerFill = '#000';
+
+            if (event != 'draw') {
+                switch (event.type) {
+                    case 'mouseover':
+                        innerFill = 'gray';
+                        break;
+                    case 'mouseout':
+                        innerFill = '#fff';
+                        break;
+                    case 'mousedown':
+                        innerFill = 'red';
+                        break;
+                    case 'mouseup':
+                        innerFill = '#fff';
+                        break;
+                    case 'click':
+                        CA.BoardClickHandler.setStrategy( CA.BoardView.zoomOut );
+                        break;
+                }
+            }
+
+            ctx.clearRect(0,0,100,100);
+            ctx.fillStyle = outerFill;
+            CA.Util.rect( ctx, 0, 0, 100, 100, 10 );
+            
+            ctx.fillStyle = innerFill;
+            CA.Util.rect( ctx, 10, 10, 80, 80, 10 );
+
+            // Draw Zoom Magnifier Here
+        },
+        init: function() {
+            CA.ToolBar.handTool( 'draw' );
+            CA.ToolBar.inspectionTool( 'draw' );
+            CA.ToolBar.stateBrushTool( 'draw' );
+            CA.ToolBar.regionBrushTool( 'draw' );
+            CA.ToolBar.zoomInTool( 'draw' );
+            CA.ToolBar.zoomOutTool( 'draw' );
+
+            document.getElementById('stateBrushSelection').addEventListener('click', CA.ToolBar.stateBrushTool);
+            
+            document.getElementById('handToolCanvas').addEventListener('click', CA.ToolBar.handTool);
+            document.getElementById('handToolCanvas').addEventListener('mousedown', CA.ToolBar.handTool);
+            document.getElementById('handToolCanvas').addEventListener('mouseup', CA.ToolBar.handTool);
+            document.getElementById('handToolCanvas').addEventListener('mouseover', CA.ToolBar.handTool);
+            document.getElementById('handToolCanvas').addEventListener('mouseout', CA.ToolBar.handTool);
+            
+            document.getElementById('inspectionToolCanvas').addEventListener('click', CA.ToolBar.inspectionTool);
+            document.getElementById('inspectionToolCanvas').addEventListener('mousedown', CA.ToolBar.inspectionTool);
+            document.getElementById('inspectionToolCanvas').addEventListener('mouseup', CA.ToolBar.inspectionTool);
+            document.getElementById('inspectionToolCanvas').addEventListener('mouseover', CA.ToolBar.inspectionTool);
+            document.getElementById('inspectionToolCanvas').addEventListener('mouseout', CA.ToolBar.inspectionTool);
+            
+            document.getElementById('stateBrushToolCanvas').addEventListener('click', CA.ToolBar.stateBrushTool);
+            document.getElementById('stateBrushToolCanvas').addEventListener('mousedown', CA.ToolBar.stateBrushTool);
+            document.getElementById('stateBrushToolCanvas').addEventListener('mouseup', CA.ToolBar.stateBrushTool);
+            document.getElementById('stateBrushToolCanvas').addEventListener('mouseover', CA.ToolBar.stateBrushTool);
+            document.getElementById('stateBrushToolCanvas').addEventListener('mouseout', CA.ToolBar.stateBrushTool);
+            
+            document.getElementById('regionBrushToolCanvas').addEventListener('click', CA.ToolBar.regionBrushTool);
+            document.getElementById('regionBrushToolCanvas').addEventListener('mousedown', CA.ToolBar.regionBrushTool);
+            document.getElementById('regionBrushToolCanvas').addEventListener('mouseup', CA.ToolBar.regionBrushTool);
+            document.getElementById('regionBrushToolCanvas').addEventListener('mouseover', CA.ToolBar.regionBrushTool);
+            document.getElementById('regionBrushToolCanvas').addEventListener('mouseout', CA.ToolBar.regionBrushTool);
+            
+            document.getElementById('zoomInToolCanvas').addEventListener('click', CA.ToolBar.zoomInTool);
+            document.getElementById('zoomInToolCanvas').addEventListener('mousedown', CA.ToolBar.zoomInTool);
+            document.getElementById('zoomInToolCanvas').addEventListener('mouseup', CA.ToolBar.zoomInTool);
+            document.getElementById('zoomInToolCanvas').addEventListener('mouseover', CA.ToolBar.zoomInTool);
+            document.getElementById('zoomInToolCanvas').addEventListener('mouseout', CA.ToolBar.zoomInTool);
+            
+            document.getElementById('zoomOutToolCanvas').addEventListener('click', CA.ToolBar.zoomOutTool);
+            document.getElementById('zoomOutToolCanvas').addEventListener('mousedown', CA.ToolBar.zoomOutTool);
+            document.getElementById('zoomOutToolCanvas').addEventListener('mouseup', CA.ToolBar.zoomOutTool);
+            document.getElementById('zoomOutToolCanvas').addEventListener('mouseover', CA.ToolBar.zoomOutTool);
+            document.getElementById('zoomOutToolCanvas').addEventListener('mouseout', CA.ToolBar.zoomOutTool);
+        }
+    };
+})();
+
+CA.ToolBar.init();
+
+console.log('ToolBar.html processed');
+</script>
