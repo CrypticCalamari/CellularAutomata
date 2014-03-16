@@ -1,0 +1,70 @@
+<script>
+var CA = CA || {};
+
+CA.Game = (function() {
+    return {
+        update: function() {
+            CA.board.step();
+            CA.board.update();
+            CA.BoardView.redrawBoard();
+        },
+        step: function( event ) {
+            if (!CA.running) {
+                CA.Game.update();
+            }
+        },
+        go: function( event ) {
+            if (!CA.running) {
+                CA.intervalId = window.setInterval( CA.Game.update, CA.speed );
+                CA.running = true;
+            }
+        },
+        stop: function( event ) {
+            if (CA.running) {
+                window.clearInterval( CA.intervalId );
+                CA.running = false;
+            }
+        },
+        speedDown: function( event ) {
+            if (CA.speed >= CA.speedMax) {
+                return false;
+            }
+            else {
+                CA.speed += CA.speedUnit;
+                if (CA.running) {
+                    CA.Game.stop();
+                    CA.Game.go();
+                }
+            }
+            return true;
+        },
+        speedUp: function( event ) {
+            if (CA.speed <= CA.speedMin) {
+                return false;
+            }
+            else {
+                CA.speed -= CA.speedUnit;
+                if (CA.running) {
+                    CA.Game.stop();
+                    CA.Game.go();
+                }
+            }
+            return false;
+        },
+        init: function() {
+            CA.cellSize = 10;
+            CA.stateBrush = 1;
+            CA.speed = 750;
+            CA.speedUnit = 50;
+            CA.speedMin = 400;
+            CA.speedMax = 5000;
+            CA.running = false;
+            CA.intervalId = null;
+        }
+    };
+})();
+
+CA.Game.init();
+
+console.log('Game.html processed');
+</script>
