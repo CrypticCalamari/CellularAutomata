@@ -1,0 +1,69 @@
+<?!= include('Stylesheet'); ?>
+
+<div id="container" class="container">
+  <div id="boardContainer" class="boardContainer">
+    <canvas id="boardCanvas" class="boardCanvas" width="500" height="500">Please update your browser to one capable of HTML5+</canvas>
+  </div>
+  
+  <!-- Menu, Tool Bar, and Action Bar -->
+  <div id="menuBar" class="menuBar">
+    <nav>
+      <a href="#" id="menuPull" class="menuPull">Menu</a>
+    </nav>
+  </div>
+  
+  <ul id="toolBar" class="toolBar">
+    <li id="handTool" class="tool handTool">
+        <canvas id="handToolCanvas" class="handToolCanvas" width="100" height="100">[Hand]</canvas>
+    </li>
+    <li id="inspectionTool" class="tool inspectionTool">
+        <canvas id="inspectionToolCanvas" class="inspectionToolCanvas" width="100" height="100">[Inspection]</canvas>
+    </li>
+    <li id="stateBrushTool" class="tool stateBrushTool">
+        <canvas id="stateBrushToolCanvas" class="stateBrushToolCanvas" width="100" height="100">[State Brush]</canvas>
+      <div id="stateBrushSelection" class="stateBrushSelection"></div>
+    </li>
+    <li id="regionBrushTool" class="tool regionBrushTool">
+        <canvas id="regionBrushToolCanvas" class="regionBrushToolCanvas" width="100" height="100">[Region Brush]</canvas>
+      <div id="region-brush-selection" class="region-brush-selection"></div>
+    </li>
+    <li id="zoomInTool" class="tool zoomInTool">
+        <canvas id="zoomInToolCanvas" class="zoomInToolCanvas" width="100" height="100">[Zoom In]</canvas>
+    </li>
+    <li id="zoomOutTool" class="tool zoomOutTool">
+        <canvas id="zoomOutToolCanvas" class="zoomOutToolCanvas" width="100" height="100">[Zoom Out]</canvas>
+    </li>
+  </ul>
+
+  <ul id="actionBar" class="actionBar">
+    <li id="speedDownAction" class="action speedDownAction">
+        <canvas id="speedDownActionCanvas" class="speedDownActionCanvas" width="100" height="100">[Speed Down]</canvas>
+    </li>
+    <li id="speedUpAction" class="action speedUpAction">
+        <canvas id="speedUpActionCanvas" class="speedUpActionCanvas" width="100" height="100">[Speed Up]</canvas>
+    </li>
+    <li id="stepAction" class="action stepAction">
+        <canvas id="stepActionCanvas" class="stepActionCanvas" width="100" height="100">[Step]</canvas>
+    </li>
+    <li id="goAction" class="action goAction">
+        <canvas id="goActionCanvas" class="goActionCanvas" width="100" height="100">[Go]</canvas>
+    </li>
+    <li id="stopAction" class="action stopAction">
+        <canvas id="stopActionCanvas" class="stopActionCanvas" width="100" height="100">[Stop]</canvas>
+    </li>
+  </ul>
+</div>
+
+<?!= include('PopulationRule'); ?>
+<?!= include('Rule'); ?>
+<?!= include('Town'); ?>
+<?!= include('Region'); ?>
+<?!= include('Cell'); ?>
+<?!= include('Board'); ?>
+<?!= include('Defaults'); ?>
+<?!= include('Util'); ?>
+<?!= include('Game'); ?>
+<?!= include('BoardView'); ?>
+<?!= include('MenuBar'); ?>
+<?!= include('ActionBar'); ?>
+<?!= include('ToolBar'); ?>
