@@ -1,0 +1,22 @@
+<script>
+var CA = CA || {};
+
+CA.Region = function() {
+    this.rules = [];
+    
+    for (var state = 0; state < 9; state++) {
+        this.rules[ state ] = null;
+    }
+}
+
+CA.Region.prototype.step = function( cell ) {
+    this.rules[ cell.state ].step( cell );
+}
+
+CA.Region.prototype.setRule = function( state, rule ) {
+    this.rules[ state ] = rule;
+    return this;
+}
+
+console.log('Region.html processed');
+</script>
