@@ -1,0 +1,30 @@
+<script>
+var CA = CA || {};
+
+CA.Rule = function( type ) {
+    this.type = type || CA.PopulationRule;
+    this.filters = [];
+}
+
+CA.Rule.prototype.addFilter = function( filter ) {
+    this.filters.push( filter );
+    return this;
+}
+
+CA.Rule.prototype.setType = function( type ) {this.type = type;}
+
+CA.Rule.prototype.step = function( cell ) {
+    if (this.filters.length != 0) {
+        var reduction = this.type.reduce( cell.town );
+
+        for (var i = 0; i < this.filters.length; i++) {
+            if (this.type.test( this.filters[i], reduction )) {
+                cell.nextState = this.filters[i].nextState;
+                break;
+            }
+        }
+    }
+}
+
+console.log('Rule.html processed');
+</script>
