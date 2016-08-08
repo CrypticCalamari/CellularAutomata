@@ -11,6 +11,3 @@ buffering. I'm sure there is a work around to the simple method
 that uses context.drawImage(buffer), but currently that isn't an
 option.
 
-Getting back to the SVG issue. I tried using canvas buttons
-instead and lulz, fuck that. Going to replace those with
-something when I get around to it.
