@@ -153,8 +153,8 @@ class Board2D:
 		self.wrapped = wrapped
 		self.border = None if wrapped else Cell2D(-1,-1,State.ZERO)
 		self.cells = []
-		self.default_region = Region(self)
 		self.regions = set()
+		self.preset_region = Region(self)
 
 		for i in range(h):
 			for j in range(w):
@@ -163,12 +163,10 @@ class Board2D:
 		for c in self.cells:
 			c.town = Town2D( Town2D.MOORE, self, c.x, c.y )
 
-		self.default_region.cells.update(self.cells)
-		self.regions.add(self.default_region)
-
+		self.preset_region.cells.update(self.cells)
+		self.regions.add(self.preset_region)
 	def __repr__(self):
 		return "Board2D:{}"
-
 	def get_cell(self, x, y):
 		if not self.wrapped:
 			if (x < 0 or x >= self.w or
@@ -178,24 +176,18 @@ class Board2D:
 				return self.cells[x + y * self.w]
 		else:
 			return self.cells[(x % self.w) + (y % self.h) * self.w]
-
 	def set_state(self, x, y, state):
 		self.get_cell(x,y).state = state
-
 	def update_new_state(self):
 		for region in self.regions:
 			region.update_new_state()
-
 	def update_state(self):
 		for region in self.regions:
 			region.update_state()
-
 	def add_cell_to_region(self, region, x, y):
 		self.regions[region].cells.add( self.get_cell(x, y) )
-
 	def remove_cell_from_region(self, region, x, y):
 		self.regions[region].cells.discard( self.get_cell(x, y) )
-
 
 ###############################################################################
 ####	TESTING	#################################################################
@@ -213,10 +205,10 @@ one.new_states[6] = State.ZERO
 one.new_states[7] = State.ZERO
 one.new_states[8] = State.ZERO
 
-board.default_region.rules[State.ZERO] = zero
-board.default_region.rules[State.ONE] = one
-board.default_region.town_locks[State.ZERO] = Town2D.sum
-board.default_region.town_locks[State.ONE] = Town2D.sum
+board.preset_region.rules[State.ZERO] = zero
+board.preset_region.rules[State.ONE] = one
+board.preset_region.town_locks[State.ZERO] = Town2D.sum
+board.preset_region.town_locks[State.ONE] = Town2D.sum
 
 board.set_state(1,0,State.ONE)
 board.set_state(2,1,State.ONE)
