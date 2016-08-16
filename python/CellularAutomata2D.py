@@ -136,6 +136,24 @@ class Town2D:
 		town.append(board.get_cell(x + 1, y))
 		return town
 	@staticmethod
+	def UPLEFTDOWNRIGHT(board, x, y):
+		town = []
+		town.append(board.get_cell(x,			y - 1))
+		town.append(board.get_cell(x - 1,	y - 1))
+		town.append(board.get_cell(x - 1,	y))
+		town.append(board.get_cell(x + 1,	y + 1))
+		return town
+	@staticmethod
+	def MISSINGTWO(board, x, y):
+		town = []
+		town.append(board.get_cell(x - 1, y - 1))		#NW
+		town.append(board.get_cell(x,			y - 1))		#N
+		town.append(board.get_cell(x + 1, y - 1))		#NE
+		town.append(board.get_cell(x + 1, y + 1))		#SE
+		town.append(board.get_cell(x - 1, y + 1))		#SW
+		town.append(board.get_cell(x - 1, y))				#W
+		return town
+	@staticmethod
 	def sum(town):
 		s = 0
 		for cell in town:
@@ -161,7 +179,7 @@ class Board2D:
 				self.cells.append( Cell2D(j, i, State.ZERO) )
 
 		for c in self.cells:
-			c.town = Town2D( Town2D.MOORE, self, c.x, c.y )
+			c.town = Town2D( Town2D.MISSINGTWO, self, c.x, c.y )
 
 		self.preset_region.cells.update(self.cells)
 		self.regions.add(self.preset_region)
@@ -192,29 +210,52 @@ class Board2D:
 ###############################################################################
 ####	TESTING	#################################################################
 ###############################################################################
-board = Board2D(80, 40, True)
+board = Board2D(120, 40, True)
 zero = Rule(State.ZERO)
 one = Rule(State.ONE)
 
+#zero.new_states[0] = State.ONE
+#zero.new_states[1] = State.ONE
+zero.new_states[2] = State.ONE
 zero.new_states[3] = State.ONE
-one.new_states[0] = State.ZERO
-one.new_states[1] = State.ZERO
+#zero.new_states[4] = State.ONE
+#zero.new_states[5] = State.ONE
+#zero.new_states[6] = State.ONE
+#zero.new_states[7] = State.ONE
+#zero.new_states[8] = State.ONE
+#one.new_states[0] = State.ZERO
+#one.new_states[1] = State.ZERO
+#one.new_states[2] = State.ZERO
+#one.new_states[3] = State.ZERO
 one.new_states[4] = State.ZERO
 one.new_states[5] = State.ZERO
 one.new_states[6] = State.ZERO
-one.new_states[7] = State.ZERO
-one.new_states[8] = State.ZERO
+#one.new_states[7] = State.ZERO
+#one.new_states[8] = State.ZERO
 
 board.preset_region.rules[State.ZERO] = zero
 board.preset_region.rules[State.ONE] = one
 board.preset_region.town_locks[State.ZERO] = Town2D.sum
 board.preset_region.town_locks[State.ONE] = Town2D.sum
 
-board.set_state(1,0,State.ONE)
-board.set_state(2,1,State.ONE)
-board.set_state(2,2,State.ONE)
-board.set_state(1,2,State.ONE)
-board.set_state(0,2,State.ONE)
+import random
+random.seed()
+
+
+for i in range(1000):
+	x = random.randint(1,119)
+	y = random.randint(1,39)
+
+	board.set_state(x, y, State.ONE)
+
+#board.set_state(40,20,State.ONE)
+#board.set_state(40,21,State.ONE)
+#board.set_state(41,20,State.ONE)
+#board.set_state(41,21,State.ONE)
+#board.set_state(42,21,State.ONE)
+#board.set_state(2,2,State.ONE)
+#board.set_state(1,2,State.ONE)
+#board.set_state(0,2,State.ONE)
 
 def print_board(board):
 	view = []
@@ -222,9 +263,9 @@ def print_board(board):
 
 	for c in board.cells:
 		if c.state is State.ZERO:
-			view.append(".")
+			view.append(" ")
 		else:
-			view.append("O")
+			view.append("█")
 
 		if x == board.w - 1:
 			view.append("\n")
@@ -239,7 +280,7 @@ while True:
 	print_board(board)
 	board.update_new_state()
 	board.update_state()
-	time.sleep(1)
+	time.sleep(0.25)
 
 
 
