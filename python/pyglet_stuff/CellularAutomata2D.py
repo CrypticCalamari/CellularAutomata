@@ -1,4 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/python
+
+import random
+import time
+from pyglet.gl import *
 
 ###############################################################################
 ####	Point2D	#################################################################
@@ -156,7 +160,7 @@ class Town2D:
 	@staticmethod
 	def sum(town):
 		s = 0
-		for cell in town:
+		for cell in town.cells:
 			s += cell.state
 		return s
 	def state_count(town):
@@ -210,7 +214,7 @@ class Board2D:
 ###############################################################################
 ####	TESTING	#################################################################
 ###############################################################################
-board = Board2D(120, 40, False)
+board = Board2D(120, 40, True)
 zero = Rule(State.ZERO)
 one = Rule(State.ONE)
 
@@ -238,7 +242,6 @@ board.preset_region.rules[State.ONE] = one
 board.preset_region.town_locks[State.ZERO] = Town2D.sum
 board.preset_region.town_locks[State.ONE] = Town2D.sum
 
-import random
 random.seed()
 
 
@@ -265,7 +268,7 @@ def print_board(board):
 		if c.state is State.ZERO:
 			view.append(" ")
 		else:
-			view.append("█")
+			view.append("M")
 
 		if x == board.w - 1:
 			view.append("\n")
@@ -274,16 +277,48 @@ def print_board(board):
 		x %= board.w
 	print("".join(view))
 
-import time
 
+"""
 while True:
 	print_board(board)
 	board.update_new_state()
 	board.update_state()
-	time.sleep(0.05)
+	time.sleep(0.25)
+"""
+
+def update(dt):
+	board.update_new_state()
+	board.update_state()
+
+#pyglet.clock.schedule_interval(update, 0.5)
+
+window = pyglet.window.Window()
+context = window.context
+config = context.config
+fps_display = pyglet.clock.ClockDisplay()
+
+@window.event
+def on_draw():
+	glClear(GL_COLOR_BUFFER_BIT)
+	glLoadIdentity()
+	batch =  pyglet.graphics.Batch()
+	for i in range(1000):
+		batch.add(1, pyglet.gl.GL_POINTS, None,
+						('v2i', (	random.randint(0, window.width),
+											random.randint(0, window.height))))
+	batch.draw()
+	fps_display.draw()
+
+@window.event
+def on_resize(width, height):
+	glViewport(0, 0, width, height)
+	glMatrixMode(gl.GL_PROJECTION)
+	glLoadIdentity()
+	glOrtho(0, width, 0, height, -1, 1)
+	glMatrixMode(gl.GL_MODELVIEW)
 
 
-
+pyglet.app.run()
 
 
 
